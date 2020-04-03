@@ -1,23 +1,25 @@
 # Mealy machine
-Mealy Machine implementation using Python and Graphviz
+Mealy Machine app using Python3 and Graphviz
 
 ## Configure a execution environment for app execution
-1.1 Install stable/latest version of [Python 3](https://www.python.org/downloads/).
+1.1 Install stable/latest version of [Python3](https://www.python.org/downloads/).
 
 1.2 Verify Python installation.
+> Terminal
 ```
 py -3
 ```
-> Stop Python console with <kbd>ctrl</kbd> + <kbd>Z</kbd>, <kbd>Enter</kbd>
 ```
 pip3 --version
 ```
+> Note: stop Python3 console with <kbd>ctrl</kbd> + <kbd>Z</kbd>, <kbd>Enter</kbd>
 
-1.3.a Install Graphviz software on Windows
+1.3.a Install Graphviz software on **Windows**.<br>
 Download [here](https://graphviz.gitlab.io/_pages/Download/Download_windows.html)
-> This app don't require enviroment path for Graphviz software
+> It's not necessary verify installation/path of this software.
 
-1.3.b Install and verify Graphviz software On Ubuntu.
+1.3.b Install and verify Graphviz software on **Ubuntu**.
+> Terminal
 ```
 sudo apt install graphviz
 ```
@@ -26,6 +28,7 @@ graphviz --version
 ```
 
 1.4 Install and verify Graphviz library on Python 3.
+> Terminal
 ```
 pip3 install graphviz
 ```
@@ -33,12 +36,20 @@ pip3 install graphviz
 pip3 show graphviz
 ```
 
-## Run Mealy Machine app
-Mealy machine is an interactive app that receives input data by commands (step by step). It is necessary input specific data in specific order because don't be there text that indicates when input the requested data.
+## Configure and run Mealy Machine app
+The app do:
+* Build a functional Mealy machine.
+* Draw and print a directed graph that represents the machine.
+* Process sample input strings into translated strings.
+ 
+With purpose of explaining app execution it used this following statement.
+> e.g.
+* English (traduced): *" A Mealy machine with input alphabet {0,1} and output alphabet {s, n} that produces as output 's' if last two digits of a string are same and 'n' if they are different"*
+* Spansh(original): *"Un máquina de Mealy con alfabeto de entrada {0,1} y alfabeto de salida {s,n} que produzca como salida 's' si los dos últimos dígitos de una cadena son iguales y 'n' si son diferentes"*
 
-For next input data forms it used this statement:
-* Spanish(original): "Construir una máquina de Mealy con alfabeto de entrada {0,1} y alfabeto de salida {s,n} que produzca como salida ’s’ si los dos últimos dígitos de la cadena binaria son iguales y ’n’ si son diferentes"
-* English(translated): "Construct a Mealy machine with input alphabet {0,1} and output alphabet {s, n} that produces as output ’s’ if the last two digits of the binary string are the same and ’n’ if they are different"
+Based on the above statement, a Mealy machine was built obtained a transition state table and a state-answer table.
+
+* Table 1- transition state table
 
 | State | Input<br> 0 1 |
 |:-----:|:-----:|
@@ -52,28 +63,43 @@ For next input data forms it used this statement:
 | q7    | q6 q7 |
 | q8    | q6 q7 |
 
-### 1. Input data step by step
-Each step describes what information is required.
-1. First step- Input all alphabet symbols ('E' elements separated by spaces in one line).
-> e.g.
+* Table 2- state-answer table<br>
+> Note: Lambda symbol used here is `^`.
+
+| State | Answer |
+|:-----:|:------:|
+| q0    | ^      |
+| q1    | ^      |
+| q2    | s      |
+| q3    | n      |
+| q4    | n      |
+| q5    | ^      |
+| q6    | n      |
+| q7    | s      |
+| q8    | n      |
+
+### 1. Input data
+The app requires an input file with all data (1 to 5 section) to construct a functional Mealy Machine and their representative directed graph and some sample strings (6 and 7 section) to generate their respective traduced strings. The followings sections explain required order and type of data for this file. All showed data is in 'input.in' file.
+* Section 1- All alphabet symbols ('E' elements separated by spaces in one line).
+> Text (e.g.)
 ```
 0 1
 ```
 
-2. Second step- Input all states ('Q' elements separated by spaces in one line).
-> e.g.
+* Section 2- All states ('Q' elements separated by spaces in one line).
+> Text (e.g.)
 ```
 q0 q1 q2 q3 q4 q5 q6 q7 q8
 ```
 
-3. Third step- Input initial state (one element in one line).
-> e.g.
+* Section 3- Initial state (one element in one line).
+> Text (e.g.)
 ```
 q0
 ```
 
-4. Fourth step- Input all transitions states (state-state pairs). The states should inputted in order like we're inputted on step 2) (a pair separated by spaces in one line. 'Q' pairs separated by breaklines).
->e.g.
+* Section 4- All transitions states (state-state pairs). The states should be inputted in order like Table 1 (a pair separated by spaces in one line. 'Q' pairs separated by breaklines).
+> Text (e.g.)
 ```
 q1 q5
 q2 q3
@@ -86,7 +112,8 @@ q6 q7
 q6 q7
 ```
 
-5. Fourth step- Input all state-answer pairs. The pairs should inputted in order like we're inputted on step 2) (a pair separated by spaces in one line. 'Q' pairs separated by breaklines).
+* Section 5- All state-answer pairs. Each state with their answer (a pair separated by spaces in one line. 'Q' pairs separated by breaklines).
+> Text (e.g.)
 ```
 q0 ^
 q1 ^
@@ -99,14 +126,14 @@ q7 s
 q8 n
 ```
 
-6. Sixth- Input a number ('K') of sample strings (one element in one line).
->e.g.
+* Section 6- A number ('K') of sample strings that they will be translated (one element in one line).
+> Text (e.g.)
 ```
 14
 ```
 
-7. Seventh- Input all sample strings (these strings don't have spaces. 'K' strings separated by breaklines)
->e.g.
+* Section 7- All sample strings (these strings don't have spaces. 'K' strings separated by breaklines)
+> Text (e.g.)
 ```
 0
 1
@@ -124,16 +151,19 @@ q8 n
 111
 ```
 
-### 2. Using data using an input file
-The input file should has all 
+### 2. Run the app
+After entering all mentioned data like in the previous sections.
+Now you can run the app using a command prompt taking the input file to generate a output file.<br>
+> Terminal
 ```
 python mealy-machine.py < input.in > ouput.out
 ```
 
-## Output data
-A set of lines with answers for each symbol that compose the lines.<br>
-Lambda symbol is `^`.
-> e.g.
+## 3. Output data
+After running the app we will generated a 'output.out' file and 
+
+* Output strings- A set of lines with translated strings saved on 'output.out' and 'mm.gv.png' image.
+> Text (e.g.)
 ```
 ^
 ^
@@ -150,3 +180,7 @@ Lambda symbol is `^`.
 ^sn
 ^ss
 ```
+
+* Output image- 'mm.gv.png' image with a directed graph representation of Mealy Machine.
+> Image (e.g.)
+![Mealy Machine Graph](/mealy-machine/logo.png)
