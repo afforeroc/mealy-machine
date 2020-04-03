@@ -1,7 +1,21 @@
-# Mealy machine
-Mealy Machine app using Python3 and Graphviz
+# Mealy machine app
+This is an app about that recreates a functional Mealy machine. It was written using Python3 language and Graphviz software.<br>
+Additional, it contains a configuration manual for use.
 
-## Configure a execution environment for app execution
+Functionalities:
+* It build a functional Mealy machine.
+* it draw and show a directed graph that represents the machine.
+* it translate strings.
+
+## Configuration manual
+This manual was designed to be done on a personal computer.<br> 
+Some steps/sections require using of console commands and text editing that will indicated with `Terminal` and `Text` labels.
+
+### Required software
+* Command prompt like Terminal(Linux) or PowerShell(Windows).
+* Text editor like Notepad++, Visual Studio Code, etc.
+
+## Configure environment for app execution
 1.1 Install stable/latest version of [Python3](https://www.python.org/downloads/).
 
 1.2 Verify Python installation.
@@ -12,11 +26,11 @@ py -3
 ```
 pip3 --version
 ```
-> Note: stop Python3 console with <kbd>ctrl</kbd> + <kbd>Z</kbd>, <kbd>Enter</kbd>
+> **Note** stop Python3 console with <kbd>ctrl</kbd> + <kbd>Z</kbd>, <kbd>Enter</kbd>
 
 1.3.a Install Graphviz software on **Windows**.<br>
 Download [here](https://graphviz.gitlab.io/_pages/Download/Download_windows.html)
-> It's not necessary verify installation/path of this software.
+> It's not necessary verify installation/path for this software.
 
 1.3.b Install and verify Graphviz software on **Ubuntu**.
 > Terminal
@@ -37,11 +51,6 @@ pip3 show graphviz
 ```
 
 ## Configure and run Mealy Machine app
-The app do:
-* Build a functional Mealy machine.
-* Draw and print a directed graph that represents the machine.
-* Process sample input strings into translated strings.
- 
 With purpose of explaining app execution it used this following statement.
 > e.g.
 * English (traduced): *" A Mealy machine with input alphabet {0,1} and output alphabet {s, n} that produces as output 's' if last two digits of a string are same and 'n' if they are different"*
@@ -79,7 +88,7 @@ Based on the above statement, a Mealy machine was built obtained a transition st
 | q8    | n      |
 
 ### 1. Input data
-The app requires an input file with all data (1 to 5 section) to construct a functional Mealy Machine and their representative directed graph and some sample strings (6 and 7 section) to generate their respective traduced strings. The followings sections explain required order and type of data for this file. All showed data is in 'input.in' file.
+The app requires an input file with all data (1 to 5 section) to construct a functional Mealy Machine and their representative directed graph, and some sample strings (6 and 7 section) to generate their respective traduced strings. The followings sections explain required order and type of data for this file. All showed data is in 'input.in' file.
 * Section 1- All alphabet symbols ('E' elements separated by spaces in one line).
 > Text (e.g.)
 ```
@@ -160,9 +169,9 @@ python mealy-machine.py < input.in > ouput.out
 ```
 
 ## 3. Output data
-After running the app we will generated a 'output.out' file and 
+After running the app, it will output a 'output.out' file and 'mm.gv.png' image.
 
-* Output strings- A set of lines with translated strings saved on 'output.out' and 'mm.gv.png' image.
+* `output.out`- A set of lines with translated strings.
 > Text (e.g.)
 ```
 ^
@@ -181,6 +190,6 @@ After running the app we will generated a 'output.out' file and
 ^ss
 ```
 
-* Output image- 'mm.gv.png' image with a directed graph representation of Mealy Machine.
+* `mm.gv.png`- directed graph representation of Mealy machine.
 > Image (e.g.)
-![Mealy Machine Graph](https://raw.githubusercontent.com/afforeroc/mealy-machine/master/mm.gv.png)
+![Mealy machine graph](https://raw.githubusercontent.com/afforeroc/mealy-machine/master/mm.gv.png)
