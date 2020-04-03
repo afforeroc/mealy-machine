@@ -4,8 +4,8 @@ Additional, it contains a configuration manual for use.
 
 Functionalities:
 * It build a functional Mealy machine.
-* it draw and show a directed graph that represents the machine.
-* it translate strings.
+* It draw and show a directed graph that represents the machine.
+* It translate strings.
 
 ## Configuration manual
 This manual was designed to be done on a personal computer.<br> 
@@ -15,7 +15,7 @@ Some steps/sections require using of console commands and text editing that will
 * Command prompt like Terminal(Linux) or PowerShell(Windows).
 * Text editor like Notepad++, Visual Studio Code, etc.
 
-## Configure environment for app execution
+### 1. Configure environment for app execution
 1.1 Install stable/latest version of [Python3](https://www.python.org/downloads/).
 
 1.2 Verify Python installation.
@@ -50,7 +50,7 @@ pip3 install graphviz
 pip3 show graphviz
 ```
 
-## Configure and run Mealy Machine app
+### 2. Configure and run Mealy Machine app
 With purpose of explaining app execution it used this following statement.
 > e.g.
 * English (traduced): *" A Mealy machine with input alphabet {0,1} and output alphabet {s, n} that produces as output 's' if last two digits of a string are same and 'n' if they are different"*
@@ -87,7 +87,7 @@ Based on the above statement, a Mealy machine was built obtained a transition st
 | q7    | s      |
 | q8    | n      |
 
-### 1. Input data
+### 3. Input data
 The app requires an input file with all data (1 to 5 section) to construct a functional Mealy Machine and their representative directed graph, and some sample strings (6 and 7 section) to generate their respective traduced strings. The followings sections explain required order and type of data for this file. All showed data is in 'input.in' file.
 * Section 1- All alphabet symbols ('E' elements separated by spaces in one line).
 > Text (e.g.)
@@ -160,7 +160,7 @@ q8 n
 111
 ```
 
-### 2. Run the app
+### 4. Run the app
 After entering all mentioned data like in the previous sections.
 Now you can run the app using a command prompt taking the input file to generate a output file.<br>
 > Terminal
@@ -168,7 +168,7 @@ Now you can run the app using a command prompt taking the input file to generate
 python mealy-machine.py < input.in > ouput.out
 ```
 
-## 3. Output data
+### 5. Output data
 After running the app, it will output a 'output.out' file and 'mm.gv.png' image.
 
 * `output.out`- A set of lines with translated strings.
