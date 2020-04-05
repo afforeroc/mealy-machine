@@ -1,9 +1,5 @@
 # APP INFO
-# Subject: Lenguajes de Programacion 2017-2
-# Teacher: Joaquin Fernando Sanchez Cifuentes
-# Mealy machine
-# Andres Felipe Forero Correa, afforeroc@unal.edu.co
-# Kevin Andres Castro Garcia, keacastroga@unal.edu.co
+# Mealy Machine App
 # This Python program execute and draw a Mealy Machine (Finite-state machine) using Python and Graphviz library.
 
 # LIBRARIES
@@ -11,15 +7,23 @@ import platform, os
 from graphviz import Digraph
 from sys import stdin
 
-# Check Operative System
+# OS verification
 os_name = platform.platform().lower()
 if "windows" in os_name:
     os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 #FUNCTIONS
 
-# Initialize and draw an automata with a states list
-def inicia_automata(Q, q0):
+# Read a generic input file and extract a data list
+def readFileToList(inputFile):
+    f = open(inputFile, "r")
+    if f.mode == 'r':
+        dataList = f.readlines()
+    f.close()
+    return dataList
+
+# Create a automata using a initial state
+def startAutomata(q0):
     automata = Digraph(format = 'png')
     automata.attr(rankdir = 'LR')
     automata.attr(size = "8,5")
@@ -27,73 +31,88 @@ def inicia_automata(Q, q0):
     automata.edge('qdot', q0)
     return automata
 
-# Create an answer dictionary
-def crea_R(qi, r, R):
-    if qi not in R:
-        R[qi] = r
-    return R
+# Create a list of state transitions 
+def createStateTransitions(sQ, machineData):
+    stateTransitions = []
+    for q in range(3, 3+sQ):
+        ssPair = machineData[q].strip().split(' ') # State-state pair
+        stateTransitions.append(ssPair)
+    return stateTransitions
+
+# Fill a generic dict
+def fillDict(key, value, D):
+    if key not in D:
+        D[key] = value
+    return D
+
+# Crete a dictionary with state-answers pairs
+def createStateAnswerDict(sQ, machineData):
+    stateAnswerDict = {} # Create a state-answer dictionary
+    for q in range(3+sQ, 3+2*sQ):
+        saPair = machineData[q].strip().split(' ') # pair state-answer
+        stateAnswerDict = fillDict(saPair[0], saPair[1], stateAnswerDict)
+    return stateAnswerDict
 
 # Build and draw a transition like a graph
-def transicion(E, Q, d_lista, R, automata):
+def mealyMachine(E, Q, stateTransitions, stateAnswerDict, automata):
     d = {}
     qi = 0
     sr = ''
-    for linea in d_lista:
+    for ssPair in stateTransitions:
         for i in range(len(E)):
-            simbolo = E[i]
-            estado = linea[i]
+            symbol = E[i]
+            state = ssPair[i]
             qi_str = Q[qi]
+            print("qi_str = ", qi_str)
             if qi_str not in d:
                 d[qi_str] = {}
-            (d[qi_str])[simbolo] = estado
-            r = R[estado]
-            sr = simbolo + '/' + r
-            automata.edge(qi_str, estado, label = sr)
+            (d[qi_str])[symbol] = state
+            print("d = ", d)
+            r = stateAnswerDict[state]
+            sr = symbol + '/' + r
+            automata.edge(qi_str, state, label = sr)
         qi += 1
+    print("qi_str = ", qi_str)
+    print("d = ", d)
     return d, automata
 
 # Give an answer for each indicated state
-def respuesta(E, q0, d, cadena, R):
-    r = ''
-    estado = q0
-    nuevo_estado = ''
-    for simbolo in cadena:
-        if simbolo in E:
-            nuevo_estado = (d[estado])[simbolo]
-            estado = nuevo_estado
-            r += R[estado]
-    return r
+def traductor(E, q0, d, inputString, mealyMachine):
+    q = q0
+    qTemp = ''
+    outputString = ''
+    for s in inputString:
+        if s in E:
+            qTemp = (d[q])[s]
+            outputString += mealyMachine[qTemp]
+    return outputString
 
 # MAIN FUNCTION
-# Input data
-E = stdin.readline().strip().split(' ') # Alphabet
-Q = stdin.readline().strip().split(' ') # State set
-q0 = stdin.readline().strip() # Initial state
+# Mealy Machine creation
+machineData = readFileToList("input\machine.txt") # Obtain all Mealy Machine data
+E = machineData[0].strip().split(' ') # Alphabet
+Q = machineData[1].strip().split(' ') # State set
+sQ = len(Q) # Number of states 
+q0 = machineData[2] # Initial state
+automata = startAutomata(q0) # Automata is created
+stateTransitions = createStateTransitions(sQ, machineData) # Create transition state list
+stateAnswerDict = createStateAnswerDict(sQ, machineData) # Create state-answer dictionary
 
-# Graphic automata is created
-automata = inicia_automata(Q, q0)
 
-# Create a list with the transition function
-d_lista = []
-for _ in range(len(Q)):
-    linea = stdin.readline().strip().split(' ')
-    d_lista.append(linea)
+d, automata = mealyMachine(E, Q, stateTransitions, stateAnswerDict, automata) # Fill automata
+automata.render('mm.gv', view = True) # Print automata
 
-# Create an answer dictionary
-R = {}
-for _ in range(len(Q)):
-    linea = stdin.readline().strip().split(' ')
-    R = crea_R(linea[0], linea[1], R)
+# Mealy Machine execution
+stringsData = readFileToList("input\strings.txt") # Obtain all strings to translate
 
-# Add transitions states for the graphic automata
-d, automata = transicion(E, Q, d_lista, R, automata)
+'''
 
-# Print the graphic automata
-automata.render('mm.gv', view = True)
-
-# Ouput
 K = int(stdin.readline()) # Number of sample strings
+translatedStrings = []
 for _ in range(K):
-    cadena = stdin.readline().strip('\n') # String that process a finite-state machine
-    r = respuesta(E, q0, d, cadena, R) # Answer
-    print(r) # Print the answer
+    iString = stdin.readline().strip('\n') # Input string
+    tString = respuesta(E, q0, d, iString, stateAnswer) # Translated string
+    translatedStrings.append(tString)
+'''
+
+    
