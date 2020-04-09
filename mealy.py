@@ -1,6 +1,5 @@
-# APP INFO
-# Mealy Machine App
-# This Python program execute and draw a Mealy Machine (Finite-state machine) using Python and Graphviz library.
+#!/usr/bin/env python
+# -*- coding: utf-8 -*- 
 
 # LIBRARIES
 import platform, os
@@ -13,7 +12,6 @@ if "windows" in os_name:
     os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 # GENERIC FUNCTIONS
-
 # Read a generic input file and extract a data list
 def readFileToList(inputFile):
     f = open(inputFile, "r")
@@ -43,7 +41,7 @@ def fillDoubleDict(key1, key2, value, dict):
     (dict[key1])[key2] = value
     return dict
 
-# SPECIAL FUNCTIONS
+# MEALY MACHINE CREATE FUNCTIONS
 
 # Create a list of state transitions 
 def createStateTransitions(sQ, machineData):
@@ -61,33 +59,37 @@ def createStateAnswerDict(sQ, machineData):
         stateAnswerDict = fillSimpleDict(stateAnswerPair[0], stateAnswerPair[1], stateAnswerDict)
     return stateAnswerDict
 
-# Create a automata using a initial state
-def initializeMealyDigraph(q0):
-    automata = Digraph(format = 'png')
-    automata.attr(rankdir = 'LR')
-    automata.attr(size = "8,5")
-    automata.node('qdot', shape = 'point')
-    automata.edge('qdot', q0)
-    return automata
-
-# Build and draw a transition like a graph
-def createAutomata(alphabet, states, stateTransitions, stateAnswerDict, mealyDigraph):
+def createMealyDict(alphabet, states, stateTransitions):
     mealyDict = {}
     j = 0
-    sr = ''
     for statePair in stateTransitions:
         for i in range(len(alphabet)):
+            state = states[j]
             symbol = alphabet[i]
-            state = statePair[i]
-            qi = states[j]
-            fillDoubleDict(qi, symbol, state, mealyDict)
-            r = stateAnswerDict[state]
-            sr = symbol + '/' + r
-            mealyDigraph.edge(qi, state, label = sr)
+            newState = statePair[i]
+            fillDoubleDict(state, symbol, newState, mealyDict)
         j += 1
-    return mealyDict, mealyDigraph
+    return mealyDict
 
-# Give an answer for each indicated state
+# MEALY MACHINE DIGRAPH FUNCTIONS
+def initializeMealyDigraph(q0):
+    mealyDigraph = Digraph(format = 'png')
+    mealyDigraph.attr(rankdir = 'LR')
+    mealyDigraph.attr(size = "8,5")
+    mealyDigraph.node('qdot', shape = 'point')
+    mealyDigraph.edge('qdot', q0)
+    return mealyDigraph
+
+def createMealyDigraph(alphabet, mealyDict, stateAnswerDict, mealyDigraph):
+    for state in mealyDict:
+        answer = stateAnswerDict[state]
+        for symbol in alphabet:
+            newState = (mealyDict[state])[symbol]
+            symbolAnswer = symbol + '/' + answer
+            mealyDigraph.edge(state, newState, label = symbolAnswer)
+    return mealyDigraph
+
+# TRANSLATE FUNCTIONS
 def translateString(q0, stateAnswerDict, mealyDict, iString):
     state = q0
     oString = ''
@@ -105,22 +107,22 @@ def translateStringList(q0, stateAnswerDict, mealyDict, inputStrings):
     return outputStrings
 
 # MAIN FUNCTION
-
-# Mealy Machine creation
+# Mealy machine creation
 machineData = readFileToList("input/machine.txt") # Obtain all Mealy Machine data
 alphabet = machineData[0].strip().split(' ') # Alphabet set
 states = machineData[1].strip().split(' ') # State set
 numStates = len(states) # Number of states 
 q0 = machineData[2] # Initial state
-stateTransitions = createStateTransitions(numStates, machineData) # Create transition state list
-stateAnswerDict = createStateAnswerDict(numStates, machineData) # Create state-answer dictionary
+stateTransitions = createStateTransitions(numStates, machineData) # Create a transition state list
+stateAnswerDict = createStateAnswerDict(numStates, machineData) # Create a state-answer dictionary
+mealyDict = createMealyDict(alphabet, states, stateTransitions) # Create a Mealy machine dictionary
 
-# Mealy Machine Digraph
+# Mealy machine digraph
 mealyDigraph = initializeMealyDigraph(q0) # Initialize a Mealy machine Digraph
-mealyDict, mealyDigraph = createAutomata(alphabet, states, stateTransitions, stateAnswerDict, mealyDigraph)
+mealyDigraph = createMealyDigraph(alphabet, mealyDict, stateAnswerDict, mealyDigraph) # create a Mealy machine Digraph
 mealyDigraph.render(filename='output/mealy_machine_digraph', cleanup=False, format='png', view = True) # Print a Mealy machine digraph
 
-# Mealy Machine execution
+# Mealy machine execution
 inputStrings = readFileToList("input/input_strings.txt") # Obtain all strings to translate
-outputStrings = translateStringList(q0, stateAnswerDict, mealyDict, inputStrings)
-writeListToFile(outputStrings, "output/output_strings.txt")
+outputStrings = translateStringList(q0, stateAnswerDict, mealyDict, inputStrings) # Translate all input strings
+writeListToFile(outputStrings, "output/output_strings.txt") # Write all translated strings on a file
