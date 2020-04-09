@@ -1,17 +1,17 @@
 # Mealy machine app
-This app recreates a functional Mealy machine. It was written using Python3 language and Graphviz software.<br>
+This app recreates a functional Mealy machine. It was written using Python3 language and Graphviz software/library.<br>
 Additional, it contains a configuration and use manual.
 
 Functionalities:
-* It builds a functional Mealy machine.
-* It draws and shows a directed graph that represents the machine.
-* It translates strings.
+* Builds a functional Mealy machine.
+* Draws a Mealy machine digraph.
+* Translates input strings.
 
 ## Manual
 This manual was designed to be done on a personal computer.<br> 
 Some steps/sections require using of command-line interpreter, text edition, etc. These are indicated with `Terminal`, `Text`, `Image` labels.
 
-### Minimum required software
+### Recommended software
 * Command-line interpreter like Terminal, PowerShell, etc.
 * Text editor like Notepad++, Visual Studio Code, etc.
 
@@ -21,12 +21,11 @@ Some steps/sections require using of command-line interpreter, text edition, etc
 1.2 Verify Python installation.
 > Command-line
 ```
-py -3
+py -3 --version
 ```
 ```
 pip3 --version
 ```
-> **Note** stop Python3 console with <kbd>ctrl</kbd> + <kbd>Z</kbd>, <kbd>Enter</kbd>
 
 1.3.a Install Graphviz software on **Windows**.<br>
 Download [here](https://graphviz.gitlab.io/_pages/Download/Download_windows.html)
@@ -41,7 +40,7 @@ sudo apt install graphviz
 graphviz --version
 ```
 
-1.4 Install and verify Graphviz library on Python3.
+1.4 Install and verify Graphviz library for Python3.
 > Command-line
 ```
 pip3 install graphviz
@@ -88,27 +87,35 @@ Based on the above statement I built a Mealy machine with this following transit
 | q8    | n      |
 
 ### 3. Input data
-The app requires an input file with all data (1 to 5 section) to construct a functional Mealy machine and their representative directed graph, and some sample strings (6 and 7 section) to generate their respective traduced strings. Followings sections explain required order and type of data for this file. All showed data is in 'input.in' file. If you need your customized Mealy machine you need edit `ìnput.in` with all respective data. 
+The app requires:
+* `machine.txt`- input file with all data to construct a representative Mealy machine and their digraph
+* `input_strings.txt`- input file with set of strings that will be translated. 
 
-* Section 1- All alphabet symbols ('E' elements separated by spaces in one line).
+These input files are in `input/` folder and will be edited according to your needs.
+
+Followings sections I explain required order of data for these files with examples.
+
+**machine.txt**
+
+* First section- All alphabet symbols ('E' elements separated by spaces in one line).
 > Text (e.g.)
 ```
 0 1
 ```
 
-* Section 2- All states ('Q' elements separated by spaces in one line).
-> Text (e.g.)
+* Second section- All states ('Q' elements separated by spaces in one line).
+> Text
 ```
 q0 q1 q2 q3 q4 q5 q6 q7 q8
 ```
 
-* Section 3- Initial state (one element in one line).
+* Third section- Initial state (only one element in one line).
 > Text (e.g.)
 ```
 q0
 ```
 
-* Section 4- All transitions states (state-state pairs). The states should be inputted in order like Table 1 (a pair separated by spaces in one line. 'Q' pairs separated by breaklines).
+* Fourth section- All transitions states (state-state pairs). These states should be inputted according with order like states were inputted, as Table 1 (a pair separated by spaces in one line. 'Q' pairs separated by breaklines).
 > Text (e.g.)
 ```
 q1 q5
@@ -122,7 +129,7 @@ q6 q7
 q6 q7
 ```
 
-* Section 5- All state-answer pairs. Each state with their answer (a pair separated by spaces in one line. 'Q' pairs separated by breaklines).
+* Fifth state- All state-answer pairs. Each state with their answer. These state-answers should be inputted according with order like states were inputted, as Table 2 (a pair separated by spaces in one line. 'Q' pairs separated by breaklines).
 > Text (e.g.)
 ```
 q0 ^
@@ -135,14 +142,8 @@ q6 n
 q7 s
 q8 n
 ```
-
-* Section 6- A number ('K') of sample strings that they will be translated (one element in one line).
-> Text (e.g.)
-```
-14
-```
-
-* Section 7- All sample strings (these strings don't have spaces. 'K' strings separated by breaklines)
+**input_strings.txt**
+* All input strings that will be translated (these strings lines don't have spaces and are separated by breaklines)
 > Text (e.g.)
 ```
 0
@@ -161,58 +162,19 @@ q8 n
 111
 ```
 
-The previous sections can sumarized in content of `input.in` file.
-> Text (e.g.)
-```
-0 1
-q0 q1 q2 q3 q4 q5 q6 q7 q8
-q0
-q1 q5
-q2 q3
-q2 q3
-q4 q7
-q2 q3
-q6 q7
-q2 q8
-q6 q7
-q6 q7
-q0 ^
-q1 ^
-q2 s
-q3 n
-q4 n
-q5 ^
-q6 n
-q7 s
-q8 n
-14
-0
-1
-00
-01
-10
-11
-000
-001
-010
-011
-100
-101
-110
-111
-```
+You can check looking inside of these input files.
 
-### 4. Run the app
-After entering all data as mentioned in "input data" section, now you can run the app using a command prompt taking the input file to generate a output file that will contains translated strings, aditional it will generated a image with graph of Mealy Machine.
-> Terminal
+### 4. App running
+After entering/editing all mentioned data in these files, now you can run the app using a command-line interpreter.
+> Command-line
 ```
-python3 mealy-machine.py < input.in > ouput.out
+python3 mealy.py
 ```
 
 ### 5. Output data
-After running the app, it will output a 'output.out' file and 'mm.gv.png' image.
+After app execution, it will output:
 
-* `output.out`- A set of lines with translated strings.
+* `output_strings.txt`- A set of lines with translated strings.
 > Text (e.g.)
 ```
 ^
@@ -231,7 +193,7 @@ After running the app, it will output a 'output.out' file and 'mm.gv.png' image.
 ^ss
 ```
 
-* `mm.gv.png`- directed graph representation of Mealy machine.
+* `mealy_machine_digraph.png`- digraph representation of Mealy machine.
 > Image (e.g.)
 
 ![Mealy machine graph](https://raw.githubusercontent.com/afforeroc/mealy-machine/master/output/mealy_machine_digraph.png)
