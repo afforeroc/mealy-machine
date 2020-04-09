@@ -30,7 +30,7 @@ pip3 --version
 
 1.3.a Install Graphviz software on **Windows**.<br>
 Download [here](https://graphviz.gitlab.io/_pages/Download/Download_windows.html)
-> **Note**: It's not necessary verify installation/path for this software.
+> It's not necessary verify installation/path for this software.
 
 1.3.b Install and verify Graphviz software on **Ubuntu**.
 > Command-line
@@ -74,8 +74,8 @@ Based on the above statement I built a Mealy machine with this following transit
 | q8    | q6 q7 |
 
 * **Table 2**- State-answer table<br>
-> e.g.
-> Note: Lambda symbol: `^`.
+> e.g.<br>
+> Lambda symbol: `^`.
 
 | State | Answer |
 |:-----:|:------:|
@@ -95,7 +95,6 @@ The app requires:
 * `input_strings.txt`- input file with set of strings that will be translated. 
 
 These input files are in `input/` folder and will be edited according to your needs.
-
 Followings sections I explain required order of data for these files with examples.
 
 **machine.txt**
@@ -175,7 +174,7 @@ python3 mealy.py
 ```
 
 ### 5. Output data
-After app execution, it will output:
+After app execution, these followings output files will be in `output/` folder.
 
 * `output_strings.txt`- translated strings set.
 > Text (e.g.)
