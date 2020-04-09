@@ -234,4 +234,4 @@ After running the app, it will output a 'output.out' file and 'mm.gv.png' image.
 * `mm.gv.png`- directed graph representation of Mealy machine.
 > Image (e.g.)
 
-![Mealy machine graph](https://raw.githubusercontent.com/afforeroc/mealy-machine/master/mm.gv.png)
+![Mealy machine graph](https://raw.githubusercontent.com/afforeroc/mealy-machine/master/output/mealy_machine_digraph.png)
