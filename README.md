@@ -59,6 +59,7 @@ With purpose of explaining app execution, I used this following statement that d
 Based on the above statement I built a Mealy machine with this following transition state and state-answer tables.
 
 * **Table 1**- Transition state table
+> e.g.
 
 | State | Input<br> 0 1 |
 |:-----:|:-----:|
@@ -73,7 +74,8 @@ Based on the above statement I built a Mealy machine with this following transit
 | q8    | q6 q7 |
 
 * **Table 2**- State-answer table<br>
-> Note: Lambda symbol used here is `^`.
+> e.g.
+> Note: Lambda symbol: `^`.
 
 | State | Answer |
 |:-----:|:------:|
@@ -175,7 +177,7 @@ python3 mealy.py
 ### 5. Output data
 After app execution, it will output:
 
-* `output_strings.txt`- A set of lines with translated strings.
+* `output_strings.txt`- translated strings set.
 > Text (e.g.)
 ```
 ^
@@ -194,7 +196,7 @@ After app execution, it will output:
 ^ss
 ```
 
-* `mealy_machine_digraph.png`- digraph representation of Mealy machine.
+* `mealy_machine_digraph.png`- a Mealy machine digraph.
 > Image (e.g.)
 
 ![Mealy machine graph](https://raw.githubusercontent.com/afforeroc/mealy-machine/master/output/mealy_machine_digraph.png)
