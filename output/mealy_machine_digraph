@@ -1,6 +1,6 @@
 digraph {
 	rankdir=LR
-	size="8,5"
+	size=10
 	qdot [shape=point]
 	qdot -> q0
 	q1 -> q2 [label="0/^"]
