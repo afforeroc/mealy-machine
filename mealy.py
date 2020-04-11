@@ -3,13 +3,21 @@
 
 # LIBRARIES
 import platform, os
-from graphviz import Digraph
 from sys import stdin
+try:
+    from graphviz import Digraph
+except:
+  print("graphviz library is not installed, please use 'pip3'")
+  exit()
 
-# OS verification
+# operative system verification
 os_name = platform.platform().lower()
 if "windows" in os_name:
-    os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
+    if not os.path.exists('C:/Program Files (x86)/Graphviz2.38/bin/'): # Graphviz software verification
+        print("Graphviz software is not installed or their path dont exist")
+        exit()
+    else:
+        os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 # GENERIC FUNCTIONS
 # Read a generic input file and extract a data list

@@ -1,12 +1,7 @@
 # Mealy machine app
-A functional Mealy machine that draw own their digraph and translate example strings.<br>
+A functional Mealy machine that draw own digraph and translate example strings.<br>
 It was written using Python3 language and Graphviz software/library.<br>
 Additional, it contains a configuration and use manual.
-
-Functionalities:
-* Builds a functional Mealy machine.
-* Draws a Mealy machine digraph.
-* Translates input strings.
 
 ## Manual
 This manual was designed to be done on a personal computer.<br> 
@@ -53,8 +48,8 @@ pip3 show graphviz
 ### 2. A Mealy machine example
 With purpose of explaining app execution, I used this following statement that describes a Mealy machine example.
 > e.g.
-* English (translated): *" A Mealy machine with input alphabet {0,1} and output alphabet {s, n} that produces as output 's' if last two digits of a string are same and 'n' if they are different"*
-* Spansh (original): *"Un máquina de Mealy con alfabeto de entrada {0,1} y alfabeto de salida {s,n} que produzca como salida 's' si los dos últimos dígitos de una cadena son iguales y 'n' si son diferentes"*
+* **English (translated)**- *" A Mealy machine with input alphabet {0,1} and output alphabet {s, n} that produces as output 's' if last two digits of a string are same and 'n' if they are different"*
+* **Spansh (original)**- *"Un máquina de Mealy con alfabeto de entrada {0,1} y alfabeto de salida {s,n} que produzca como salida 's' si los dos últimos dígitos de una cadena son iguales y 'n' si son diferentes"*
 
 Based on the above statement I built a Mealy machine with this following transition state and state-answer tables.
 
@@ -91,10 +86,10 @@ Based on the above statement I built a Mealy machine with this following transit
 
 ### 3. Input data
 The app requires:
-* `machine.txt`- input file with all data to construct a representative Mealy machine and their digraph
+* `machine.txt`- input file with all data to construct a representative Mealy machine and their digraph.
 * `input_strings.txt`- input file with set of strings that will be translated. 
 
-These input files are in `input/` folder and will be edited according to your needs.
+These input files are in `input/` folder and must be edited according to your needs.
 Followings sections I explain required order of data for these files with examples.
 
 **machine.txt**
@@ -131,7 +126,7 @@ q6 q7
 q6 q7
 ```
 
-* Fifth state- All state-answer pairs. Each state with their answer. These state-answers should be inputted according with order like states were inputted, as Table 2 (a pair separated by spaces in one line. 'Q' pairs separated by breaklines).
+* Fifth section- All state-answer pairs. Each state with their answer. These state-answers should be inputted according with order like states were inputted, as Table 2 (a pair separated by spaces in one line. 'Q' pairs separated by breaklines).
 > Text (e.g.)
 ```
 q0 ^
