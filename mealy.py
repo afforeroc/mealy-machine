@@ -7,22 +7,27 @@ from sys import stdin
 try:
     from graphviz import Digraph
 except:
-  print("graphviz library is not installed, please use 'pip3'")
+  print("'graphviz' library is not installed, please use command: 'pip3 install graphviz'")
   exit()
 
 # operative system verification
 os_name = platform.platform().lower()
 if "windows" in os_name:
-    if not os.path.exists('C:/Program Files (x86)/Graphviz2.38/bin/'): # Graphviz software verification
+    try:
+        if os.path.exists('C:/Program Files (x86)/Graphviz2.38/bin/'): # Graphviz software verification
+            os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
+    except:
         print("Graphviz software is not installed or their path dont exist")
         exit()
-    else:
-        os.environ["PATH"] += os.pathsep + 'C:/Program Files (x86)/Graphviz2.38/bin/'
 
 # GENERIC FUNCTIONS
 # Read a generic input file and extract a data list
 def readFileToList(inputFile):
-    f = open(inputFile, "r")
+    try:
+        f = open(inputFile, "r")
+    except:
+        print(f'Cant open "{inputFile}" file')
+        exit()
     if f.mode == 'r':
         dataList = f.read().splitlines()
     f.close()
@@ -30,7 +35,11 @@ def readFileToList(inputFile):
 
 # Write a generic output file from a data list
 def writeListToFile(dataList, outputFile):
-    f = open(outputFile, "w")
+    try:
+        f = open(outputFile, "w")
+    except:
+        print(f'Cant open "{outputFile}" file')
+        exit()
     if f.mode == 'w':
         for line in dataList:
             f.write(line+'\n')
