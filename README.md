@@ -1,4 +1,4 @@
-# Mealy machine app
+# Mealy machine
 A functional Mealy machine that draw own digraph and translate example strings.<br>
 It was written using Python3 language and Graphviz software/library.<br>
 Additional, it contains a configuration and use manual.
